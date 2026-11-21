@@ -29,6 +29,21 @@ jobs:
         with:
           persist-credentials: false
 
+      # Second line of defence behind .gitignore: fails the build if user data, a backup, an installer,
+      # a scan, an office document or key material was ever added to the repository (even with "git add -f").
+      - name: Refuse data, binaries and secrets in the repository
+        shell: pwsh
+        run: |
+          $forbidden = '\.(sqlite|sqlite-wal|sqlite-shm|sqlite-journal|db|bak|backup|dump|dmp|exe|msi|dll|zip|7z|jpg|jpeg|heic|tif|tiff|pdf|doc|docx|xls|xlsx|csv|log|env|pem|key|pfx|p12|crt|cer|kdbx)$|(^|/)\.env|(^|/)(sauvegarde[^/]*|fichiers|installateur)/'
+          $tracked = @(git ls-files)
+          $hits = @($tracked | Where-Object { $_ -match $forbidden -and $_ -notmatch '^tests/installateur/' })
+          $images = @($tracked | Where-Object { $_ -match '\.png$' -and $_ -notmatch '^(docs/images|src-tauri/icons)/' })
+          if ($hits.Count -or $images.Count) {
+            ($hits + $images) | ForEach-Object { Write-Host "Forbidden tracked file: $_" }
+            exit 1
+          }
+          Write-Host "No forbidden file among $($tracked.Count) tracked files."
+
       - name: Set up Node.js (version from .nvmrc)
         uses: actions/setup-node@v7
         with:

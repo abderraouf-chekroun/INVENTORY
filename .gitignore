@@ -72,3 +72,52 @@ desktop.ini
 
 # Original prototype kept locally; the tracked copy is design/prototype-entites-dossiers.html
 /prototype-entites-dossiers.html
+
+# ---------------------------------------------------------------------------------------------
+# Strict mode: nothing below may ever enter the repository
+# ---------------------------------------------------------------------------------------------
+# Any backup or export of application data, wherever it is
+sauvegarde*/
+*.bak
+*.backup
+*.dump
+*.dmp
+
+# Installers and other binaries (releases are published on GitHub Releases, never committed)
+*.exe
+*.msi
+*.dll
+*.sha256
+*.zip
+*.7z
+
+# Scans, photos and office documents (forms and real documents stay out of the repository)
+*.jpg
+*.jpeg
+*.heic
+*.tif
+*.tiff
+*.pdf
+*.doc
+*.docx
+*.xls
+*.xlsx
+*.csv
+design/formulaires/
+
+# Images are tracked only in these two folders (documentation screenshots made from the
+# fictitious example data, and application icons)
+*.png
+!docs/images/*.png
+!src-tauri/icons/**
+
+# Credentials and tool configuration that may hold tokens
+.npmrc
+.cargo/credentials*
+credentials*.json
+secrets.*
+*.crt
+*.cer
+*.kdbx
+id_rsa*
+id_ed25519*
