@@ -1,0 +1,48 @@
+/* Version 1.2 — affectations, historique cliquable, structures et types modifiables, signatures cochées.
+   Reprend les jetons et le langage visuel du prototype. */
+
+/* Historique cliquable : un nom cité est un bouton qui ressemble à un lien. */
+.tl-lien{display:inline;padding:0;margin:0;border:0;background:none;font:inherit;color:var(--accent-t);cursor:pointer;
+  text-decoration:underline;text-decoration-color:var(--accent-b);text-underline-offset:2px;border-radius:2px;text-align:left}
+.tl-lien:hover{text-decoration-color:currentColor}
+.tl-lien:focus-visible{outline:2px solid var(--focus);outline-offset:1px}
+.tl .tl-liens{display:flex;flex-wrap:wrap;gap:2px 14px;margin-top:2px}
+
+/* Onglets d'une fiche (onglet et défilement retrouvés au retour). */
+.fiche-onglets{display:flex;flex-direction:column;gap:12px;min-width:0;scroll-margin-top:12px}
+
+/* Affectations : les anciennes, plus discrètes. */
+tr.ancienne td{color:var(--fg2)}
+/* Tableaux d'affectations : pas de colonne « Statut » (une fiche archivée porte son badge après le nom) ;
+   fenêtre étroite (jusqu'à 1024 px) : cellules resserrées et « Retirer l'affectation » sur deux lignes si besoin,
+   le tableau tient sans défilement horizontal. */
+@media (max-width:1100px){
+  .tbl-wrap.affectations th,.tbl-wrap.affectations td{padding-left:8px;padding-right:8px}
+  .tbl-wrap.affectations td .btn{white-space:normal;height:auto;min-height:28px;line-height:16px;padding:4px 10px;max-width:120px;text-align:center}
+}
+
+/* Paramètres : structures et types de machine (nombre de fiches, renommer, supprimer). */
+.cl-item{display:grid;gap:6px;border-bottom:1px solid var(--border-s)}
+.cl-item:last-of-type{border-bottom:0}
+.set .cl-item .line{border-bottom:0}
+.cl-nom{display:grid;gap:0;min-width:0}
+.set .line .cl-nom small{font-size:12px;color:var(--fg3)}
+.cl-acts{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.cl-renommer .field{flex:1;min-width:160px;height:28px}
+.btn.indispo,.btn.indispo:hover{color:var(--fg-dis);background:var(--surface);border-color:var(--border-s);cursor:help}
+.cl-motif{display:flex;gap:8px;align-items:flex-start;margin:0 0 8px;padding:8px 10px;border-radius:6px;border:1px solid var(--accent-b);
+  background:var(--accent-s);color:var(--fg);font-size:12px;line-height:17px}
+.cl-motif>.ic{color:var(--accent-t);margin-top:1px;flex:none}
+.set .cl-motif span{color:var(--fg)}
+
+/* Signatures : case « Signé » sous le libellé du signataire, puis l'état. */
+.paper .p-sig-lib{font-weight:600}
+.paper .p-sig-case{font-weight:500;gap:8px}
+.paper .p-sig-etat{font-size:12px;color:var(--fg3)}
+.paper .p-sig-etat.ok{color:var(--ok-t);font-weight:500}
+
+/* Aperçu du Studio : champs inertes. */
+.paper .p-inerte{cursor:default;font-weight:400;font-size:13px;line-height:18px;height:auto;min-height:32px;padding:6px 8px;align-items:flex-start;background:var(--subtle)}
+.paper .p-inerte>.ic{margin-top:2px;flex:none}
+.paper .p-aide{font-size:12px;color:var(--fg3);font-weight:400}
+@media screen{ .paper .df .field:disabled{background:var(--subtle)} }

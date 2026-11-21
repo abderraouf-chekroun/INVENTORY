@@ -1,0 +1,24 @@
+/* Compteurs et graphiques — repris à l'identique du prototype (design/prototype-entites-dossiers.html). */
+/* kpi + charts */
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.kpi{display:flex;flex-direction:column;gap:4px;padding:16px;border:1px solid var(--border);border-radius:8px;background:var(--surface);width:100%}
+.kpi:hover{border-color:var(--border-x)}
+.kpi small{font-size:12px;font-weight:500;color:var(--fg2);display:flex;justify-content:space-between;gap:8px}
+.kpi strong{font-size:24px;line-height:32px;font-weight:600;letter-spacing:-.01em}
+.kpi em{font-style:normal;font-size:12px;color:var(--fg3)}
+.kpi.att strong{color:var(--bad-t)} .kpi.att small .ic{color:var(--bad)}
+.card{padding:16px;border:1px solid var(--border);border-radius:8px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.card h3{margin:0;font-size:14px;font-weight:600;display:flex;justify-content:space-between;gap:8px}
+.card h3 span{font-size:12px;font-weight:400;color:var(--fg3)}
+.stack{display:flex;gap:2px;height:12px;border-radius:3px;overflow:hidden}
+.legend{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.legend li{display:flex;align-items:center;gap:8px;color:var(--fg2)}
+.legend li i{width:8px;height:8px;border-radius:2px}
+.legend li b{margin-left:auto;color:var(--fg);font-weight:500}
+.legend li span{width:40px;text-align:right;font-size:12px;color:var(--fg3)}
+.bars{display:grid;grid-template-columns:24px 1fr;gap:8px}
+.bars .y{display:flex;flex-direction:column;justify-content:space-between;height:156px;font-size:12px;color:var(--fg3);text-align:right}
+.bars .plot{display:flex;align-items:flex-end;gap:12px;height:140px;margin-top:8px;padding:0 8px;border-bottom:1px solid var(--border-x);
+  background:repeating-linear-gradient(to bottom,var(--grid) 0 1px,transparent 1px 46.66px)}
+.bars .plot i{flex:1;border-radius:2px 2px 0 0;background:var(--vol)} .bars .plot i.m{background:var(--vol-m)}
+.bars .x{grid-column:2;display:flex;gap:12px;padding:0 8px;font-size:12px;color:var(--fg3)} .bars .x span{flex:1;text-align:center}

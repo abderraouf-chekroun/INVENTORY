@@ -1,0 +1,31 @@
+/* Contrôles — repris à l'identique du prototype (design/prototype-entites-dossiers.html). */
+/* controls */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:28px;padding:0 12px;border-radius:6px;font-weight:500;border:1px solid var(--border);background:var(--surface);white-space:nowrap}
+.btn:hover{background:var(--hover);border-color:var(--border-x)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.primary:hover{background:var(--accent-h);border-color:var(--accent-h)}
+.btn.ghost{border-color:transparent;background:none;color:var(--fg2)}
+.btn.ghost:hover{background:var(--hover);color:var(--fg)}
+.btn.lg{height:36px;padding:0 16px}
+.btn:disabled{color:var(--fg-dis);background:var(--surface);border-color:var(--border-s);cursor:default}
+.field{height:28px;padding:0 8px;border:1px solid var(--border);border-radius:6px;background:var(--surface);min-width:0}
+.field:hover{border-color:var(--border-x)}
+textarea.field{height:auto;padding:6px 8px;resize:vertical;width:100%}
+select.field{padding-right:4px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 8px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-weight:500}
+.chip[aria-pressed="true"]{background:var(--accent-s);border-color:var(--accent-b);color:var(--accent-t)}
+.chip .box{width:14px;height:14px;border-radius:4px;border:1px solid var(--border-x);display:grid;place-items:center}
+.chip[aria-pressed="true"] .box{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.seg{display:inline-flex;padding:2px;gap:2px;border-radius:6px;background:var(--muted)}
+.seg button{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 8px;border-radius:4px;color:var(--fg2);font-weight:500;border:1px solid transparent;white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--surface);border-color:var(--border);color:var(--fg)}
+.kbd{font:11px/16px var(--mono);color:var(--fg2);border:1px solid var(--border);border-radius:4px;padding:0 4px;background:var(--surface);min-width:18px;text-align:center}
+.badge{display:inline-flex;align-items:center;gap:4px;height:20px;padding:0 6px;border-radius:4px;font-size:12px;font-weight:500;border:1px solid;white-space:nowrap}
+.badge i{width:6px;height:6px;border-radius:50%;background:currentColor}
+.badge.ok{background:var(--ok-bg);border-color:var(--ok-b);color:var(--ok-t)} .badge.ok i{background:var(--ok)}
+.badge.warn{background:var(--warn-bg);border-color:var(--warn-b);color:var(--warn-t)} .badge.warn i{background:var(--warn)}
+.badge.warn.strong{border-color:var(--warn)}
+.badge.bad{background:var(--bad-bg);border-color:var(--bad-b);color:var(--bad-t)} .badge.bad i{background:var(--bad)}
+.badge.plain{background:var(--surface);border-color:var(--border);color:var(--fg)} .badge.plain i{background:var(--fg3)}
+.badge.mute{background:var(--muted);border-color:var(--border);color:var(--fg2)} .badge.mute i{background:none;border:1.5px solid var(--fg3)}
+.count{display:inline-grid;place-items:center;min-width:18px;height:18px;padding:0 6px;border-radius:999px;background:var(--muted);color:var(--fg2);font-size:12px;font-weight:500}

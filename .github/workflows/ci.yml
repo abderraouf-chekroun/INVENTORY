@@ -1,0 +1,111 @@
+# Continuous integration for INVENTORY (Windows desktop application: Tauri 2, Rust, React).
+#
+# Job "build-and-test": type checking, front-end unit tests, production front-end build, then the Rust test suite.
+# Job "audit": known vulnerabilities in the Rust and npm production dependencies.
+#
+# The end-to-end suite (tests/e2e) is not run here: it drives the real mouse and keyboard of a desktop session.
+
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: Build and test
+    runs-on: windows-latest
+    timeout-minutes: 60
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js (version from .nvmrc)
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install npm dependencies (exact versions from package-lock.json)
+        run: npm ci
+
+      - name: Type-check the front end
+        run: npx tsc --noEmit
+
+      - name: Run the front-end unit tests
+        run: npx vitest run
+
+      - name: Build the front end (required by the Rust build, which embeds dist/)
+        run: npm run build
+
+      - name: Install the stable Rust toolchain
+        shell: pwsh
+        run: |
+          rustup toolchain install stable --profile minimal
+          rustup default stable
+          rustc --version
+          cargo --version
+
+      - name: Cache Cargo registry and build output
+        uses: actions/cache@v6
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+            src-tauri/target
+          key: cargo-${{ runner.os }}-${{ hashFiles('src-tauri/Cargo.lock') }}
+          restore-keys: |
+            cargo-${{ runner.os }}-
+
+      - name: Run the Rust tests (dependencies locked by Cargo.lock)
+        working-directory: src-tauri
+        run: cargo test --locked
+
+  audit:
+    name: Dependency audit
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js (version from .nvmrc)
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+
+      - name: Install the stable Rust toolchain
+        shell: pwsh
+        run: |
+          rustup toolchain install stable --profile minimal
+          rustup default stable
+
+      - name: Cache cargo-audit
+        id: cache-cargo-audit
+        uses: actions/cache@v6
+        with:
+          path: ~/.cargo/bin/cargo-audit.exe
+          key: cargo-audit-${{ runner.os }}-0.23
+
+      - name: Install cargo-audit
+        if: steps.cache-cargo-audit.outputs.cache-hit != 'true'
+        run: cargo install cargo-audit --locked --version ^0.23
+
+      - name: Audit Rust dependencies (RustSec advisory database)
+        working-directory: src-tauri
+        run: cargo audit
+
+      - name: Audit npm production dependencies
+        run: npm audit --omit=dev

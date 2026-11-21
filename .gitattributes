@@ -1,0 +1,30 @@
+# Line endings: text files are stored with LF in the repository and checked out with LF on every platform
+# (Rust, TypeScript, CSS, SQL, NSIS and PowerShell sources all accept LF).
+* text=auto eol=lf
+
+# Windows batch files need CRLF.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary files: never normalized, never diffed as text.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.icns binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.exe binary
+*.dll binary
+*.sqlite binary
+
+# Lock files: generated, reviewed as a whole.
+package-lock.json -diff linguist-generated=true
+src-tauri/Cargo.lock -diff linguist-generated=true
+
+# Design prototypes (single-file HTML mock-ups) are not part of the application code.
+design/*.html linguist-documentation=true

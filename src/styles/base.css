@@ -1,0 +1,12 @@
+/* Base — reprise du prototype (design/prototype-entites-dossiers.html).
+   Adaptation fenêtre réelle (spécification § 7) : plus de canevas gris ni de marges autour de la fenêtre,
+   le corps prend la couleur de l'application et ne défile jamais (seul .content défile). */
+html,body,#root{height:100%}
+*{box-sizing:border-box}
+body{margin:0;overflow:hidden;background:var(--app);color:var(--fg);font:13px/20px var(--sans)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0;text-align:left}
+:focus-visible{outline:2px solid var(--focus);outline-offset:1px}
+.ic{flex:none}
+.mono{font-family:var(--mono);font-size:12px;font-weight:500}
+.num{font-variant-numeric:tabular-nums}

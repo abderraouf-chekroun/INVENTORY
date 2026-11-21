@@ -1,0 +1,9 @@
+/* Version 1.7 — catégories des dossiers et des modèles (ex-thèmes) modifiables (spécification § 16).
+   Aucune couleur nouvelle : les listes de Paramètres reprennent `ClassementList` (v13.css), la liste de l'en-tête du
+   dossier reprend celle de l'état. */
+
+/* Création sur place d'une catégorie (formulaire de dossier, Studio) : même largeur que pour une structure. */
+.sans-categorie-nom{width:220px;max-width:100%}
+
+/* En-tête du dossier : liste « Catégorie », sans pastille de couleur (contrairement à l'état). */
+.categorie-select .field{min-width:150px;max-width:240px;font-weight:500;color:var(--fg)}

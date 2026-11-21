@@ -1,0 +1,123 @@
+/* Version 1.1 — aide à la saisie, identifiant d'un employé, palette du Studio, blocs du papier.
+   Reprend les jetons et le langage visuel du prototype (bordures, rayons, couleurs d'accent). */
+
+/* Texte lu par les lecteurs d'écran seulement. */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+/* Éléments propres à l'impression (texte d'une zone, date mise en forme), masqués à l'écran. */
+.print-only{display:none}
+
+/* Aide à la saisie d'un employé ou d'une machine */
+.choix-fiche{display:grid;gap:4px;min-width:0}
+.cf-label{display:grid;gap:2px;font-weight:500;color:var(--fg)}
+.cf-label small{font-weight:400;color:var(--fg3);font-size:12px}
+.cf-saisie{position:relative;display:flex;gap:8px;align-items:center;min-width:0}
+.cf-zone{flex:1;display:flex;align-items:center;gap:8px;height:32px;padding:0 8px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--fg3);min-width:0}
+.cf-zone:hover{border-color:var(--border-x)}
+.cf-zone:focus-within{border-color:var(--focus);box-shadow:0 0 0 1px var(--focus)}
+.cf-input{flex:1;min-width:0;height:100%;border:0;background:none;outline:0;color:var(--fg);font-weight:400}
+.cf-input::placeholder{color:var(--fg3)}
+.cf-pop{position:absolute;left:0;right:0;top:calc(100% + 4px);background:var(--raised);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow);z-index:25;overflow:hidden}
+.cf-pop[hidden]{display:none}
+/* La liste ouverte dans un document ne doit pas être coupée par le cadre de l'aperçu. */
+.preview:has(.cf-pop:not([hidden])){overflow:visible}
+.cf-pop ul{list-style:none;margin:0;padding:4px;max-height:min(340px,50vh);overflow-y:auto}
+.cf-pop ul:empty{display:none}
+.cf-pop li{display:flex;align-items:center;gap:10px;min-height:44px;padding:4px 8px;border-radius:6px;cursor:pointer;color:var(--fg2);font-weight:400}
+.cf-pop li.on{background:var(--selected)} .cf-pop li.on>.ic{color:var(--accent-t)}
+.cf-txt{flex:1;min-width:0;display:grid}
+.cf-txt b{font-weight:500;color:var(--fg)}
+.cf-txt small{font-size:12px;line-height:16px;color:var(--fg2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cf-pop mark{background:none;color:var(--accent-t);font-weight:600}
+.cf-vide{margin:0;padding:10px 12px;color:var(--fg2);font-size:12px;font-weight:400}
+.cf-carte{display:flex;align-items:flex-start;gap:12px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--subtle);min-width:0}
+.cf-carte.vide{align-items:center;color:var(--fg3)}
+.cf-carte.complet{display:grid;gap:6px}
+.cf-tete{display:flex;align-items:center;gap:8px;min-height:28px}
+.cf-tete .cf-label{flex:1}
+.cf-tete .btn{height:24px;padding:0 8px;font-size:12px}
+.cf-ic{width:36px;height:36px;border-radius:6px;background:var(--accent-s);color:var(--accent-t);display:grid;place-items:center;flex:none}
+.cf-corps{flex:1;min-width:0;display:grid;gap:2px;font-weight:400}
+.cf-corps>b{font-weight:600;color:var(--fg)}
+.cf-corps>small{display:flex;gap:4px 10px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--fg2)}
+.cf-arch{color:var(--warn-t)!important}
+.cf-acts{display:flex;gap:4px;flex:none;align-self:center}
+.cf-details{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:6px 16px;margin:0}
+.cf-details dt{font-size:11px;line-height:16px;color:var(--fg3);font-weight:400}
+.cf-details dd{margin:0;font-weight:500;color:var(--fg);overflow-wrap:anywhere}
+.dd .res .res-d{color:var(--fg3);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+
+/* Tableaux de fiches : les textes longs passent à la ligne (le tableau tient dans la largeur de la page) */
+td.long{white-space:normal;min-width:88px;padding-top:6px;padding-bottom:6px;line-height:18px;overflow-wrap:break-word}
+td.long>span>.ic{flex:none}
+/* En-têtes des tableaux de fiches : sur deux lignes si besoin (« Marque et configuration », « Mise à jour »). */
+.tbl-wrap.fiches th{white-space:normal;line-height:14px;padding-top:6px;padding-bottom:6px}
+.tbl-wrap.fiches td:not(.long){white-space:nowrap}
+td.long small{display:block;font-size:12px;line-height:16px;color:var(--fg3)}
+
+/* Identifiant qui sera attribué à un employé */
+.id-apercu{display:grid;gap:2px;padding:12px 14px;border:1px dashed var(--accent-b);border-radius:8px;background:var(--accent-s)}
+.id-tete{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--accent-t)}
+.id-apercu b{font-size:18px;line-height:26px;color:var(--fg)}
+.id-apercu b .mono{font-size:18px;font-weight:600;letter-spacing:.03em}
+.id-vide{color:var(--fg3);font-weight:500;font-size:15px}
+.id-apercu small{color:var(--fg2);font-size:12px}
+.form-paire{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+
+/* Studio : palette des champs personnalisés, note de restauration */
+.palette-v11{display:grid;gap:10px;padding:12px;border:1px solid var(--border);border-radius:8px;background:var(--subtle)}
+.palette-titre{margin:0;display:grid;gap:2px}
+.palette-titre b{font-weight:600}
+.palette-titre span{font-size:12px;color:var(--fg2)}
+.palette-groupe{display:grid;gap:6px}
+.palette-v11 .palette{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.palette-v11 .palette button{height:auto;min-height:48px;padding:6px 8px;background:var(--surface)}
+.pal-txt{display:grid;flex:1;min-width:0;text-align:left;line-height:18px}
+.pal-txt small{font-size:11px;line-height:14px;font-weight:400;color:var(--fg3)}
+.studio-note{margin:0;font-size:12px;color:var(--fg2)}
+/* Liste des modèles : « Standard · Actif » reste d'un bloc (passe à la ligne entier, sans couper le thème). */
+.mitem small{flex-wrap:wrap} .mitem small>span{white-space:nowrap;margin-left:auto}
+.studio-note:empty{display:none}
+.p-box{width:16px;height:16px;border:1.5px solid var(--fg2);border-radius:3px;display:inline-block;flex:none}
+.p-box.rond{border-radius:50%}
+
+/* Blocs du papier */
+.paper .p-bloc{min-width:0}
+.paper .p-titre{margin:6px 0 2px;text-align:center;font-size:18px;line-height:24px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:var(--fg);text-wrap:balance}
+.paper .p-intertitre{margin:8px 0 0;padding:5px 8px;text-align:center;font-size:12px;line-height:16px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--fg);background:var(--subtle);border:1px solid var(--border-x);border-radius:2px}
+/* Deux intertitres qui se suivent (« Informations du PC avant formatage » puis « Configuration matérielle ») :
+   un en-tête de section sur deux lignes, comme sur le papier, la seconde ligne en sous-titre. */
+.paper .p-bloc:has(>.p-intertitre)+.p-bloc:has(>.p-intertitre){margin-top:-12px}
+.paper .p-bloc:has(>.p-intertitre)+.p-bloc>.p-intertitre{margin-top:0;border-top:0;text-transform:none;letter-spacing:0;font-size:13px}
+.paper .p-texte{white-space:pre-line}
+.paper .p-legende{display:block;font-size:12px;font-weight:600;color:var(--fg);margin:0 0 6px}
+.paper fieldset.p-choix{border:0;margin:0;padding:0;min-width:0;display:grid}
+.paper .p-choix legend{padding:0}
+.paper .p-opts{display:flex;flex-wrap:wrap;gap:8px 22px}
+.paper .p-opts .ck{font-weight:400}
+.paper .p-effacer{height:22px;font-size:12px;padding:0 6px;color:var(--fg3)}
+.paper .p-fiche{display:grid;gap:6px;min-width:0}
+.paper .p-fiche .cf-carte{background:var(--surface)}
+.paper .p-sigs{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);margin-top:6px;border:1px solid var(--border-x)}
+.paper .p-sig{display:grid;gap:6px;justify-items:center;align-content:start;padding:8px;border-left:1px solid var(--border-x);text-align:center;font-size:12px;line-height:16px;color:var(--fg)}
+.paper .p-sig:first-child{border-left:0}
+.paper .p-tab{display:grid;gap:8px;justify-items:start;min-width:0}
+.paper .p-tab-defile{width:100%;overflow-x:auto}
+/* Largeurs fixes : colonnes étroites (« N° », « Qté ») à 9 %, les autres se partagent le reste à parts égales,
+   quel que soit le contenu saisi (à l'écran comme à l'impression). */
+.paper .p-table{width:100%;table-layout:fixed}
+.paper .p-table td{overflow-wrap:anywhere}
+.paper .p-table th{color:var(--fg);background:var(--subtle);border-color:var(--border-x);white-space:normal;line-height:16px;padding:4px 8px;font-size:12px;letter-spacing:0;text-transform:none;text-align:center}
+.paper .p-table td{white-space:normal;color:var(--fg)}
+.paper .p-table th.etroite{width:max(9%,48px)}
+.paper .p-table th{overflow-wrap:anywhere}
+.paper tbody tr:hover td{background:none}
+.paper tbody tr{cursor:default}
+.paper .p-bloc.entete .p-texte{text-align:center;font-size:12px;line-height:17px}
+.paper .p-bloc.entete+.p-bloc:not(.entete){margin-top:4px}
+.paper .p-table td{border-color:var(--border-x)}
+.paper td.cell-saisie{padding:0}
+.paper .p-inconnu{margin:0;font-size:12px;color:var(--fg3);font-style:italic}
+.paper .p-zone{white-space:pre-wrap}
+.paper .df>span:first-child{font-weight:500}
+.paper .df textarea.field{height:auto;min-height:68px;font-size:13px;font-weight:400;line-height:20px}
+.paper .p-date-in{max-width:220px}

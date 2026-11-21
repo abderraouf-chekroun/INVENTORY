@@ -1,0 +1,16 @@
+/* Impression (spécification § 4, Documents) : seule la feuille « papier » (.paper) est imprimée,
+   toujours avec les couleurs du thème clair. Tout ce qui ne contient pas .paper est masqué,
+   et les ancêtres de .paper sont aplatis (plus de grille, de hauteur fixe ni de défilement). */
+@media print{
+  @page{margin:16mm}
+  :root:root:root{
+    --app:#FFFFFF; --surface:#FFFFFF; --raised:#FFFFFF; --subtle:#FAFBFB; --muted:#EBEDEF;
+    --fg:#171B20; --fg2:#56606B; --fg3:#6B7480; --fg-dis:#9FA7B1;
+    --border-s:#EBEDEF; --border:#DEE1E5; --border-x:#C8CDD3;
+    --accent:#2B59C3; --accent-t:#2B59C3; --accent-s:#EEF3FC; --accent-b:#BCCFF3; color-scheme:light }
+  body *:not(:has(.paper)):not(.paper):not(.paper *){display:none!important}
+  :has(.paper){display:block!important;position:static!important;height:auto!important;min-height:0!important;max-width:none!important;
+    overflow:visible!important;margin:0!important;padding:0!important;border:0!important;background:none!important;box-shadow:none!important}
+  .paper{border:0;padding:0;min-height:0;background:none}
+  .paper ::placeholder{color:transparent}
+}

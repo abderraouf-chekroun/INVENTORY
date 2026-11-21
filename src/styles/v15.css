@@ -1,0 +1,43 @@
+/* Version 1.5 — suppression directe des documents, des employés et des machines (spécification § 13).
+   Aucune couleur nouvelle : les jetons « bad » (badges, alertes) servent au style « danger », dans les deux thèmes. */
+
+/* ---------- Bouton « danger » : « Supprimer » d'une fiche, « Supprimer définitivement » ---------- */
+.btn.danger{color:var(--bad-t);border-color:var(--bad-b)}
+.btn.danger:hover{background:var(--bad-bg);border-color:var(--bad)}
+.btn.danger.fort{background:var(--bad);border-color:var(--bad);color:var(--on-accent)}
+.btn.danger.fort:hover{background:var(--bad-t);border-color:var(--bad-t);color:var(--on-accent)}
+.btn.danger:disabled,.btn.danger.fort:disabled{color:var(--fg-dis);background:var(--surface);border-color:var(--border-s)}
+
+/* ---------- Corbeille d'une ligne de document (contenu du dossier, arborescence, profil) ---------- */
+.btn.corbeille{width:32px;height:32px;padding:0;flex:none;color:var(--fg2)}
+.btn.corbeille:hover{color:var(--bad-t);background:var(--bad-bg)}
+.btn.corbeille.indispo,.btn.corbeille.indispo:hover{color:var(--fg-dis);background:none;border-color:transparent}
+
+/* Ligne de liste : le bouton qui ouvre le document, et la corbeille posée à sa droite, dans son cadre (deux boutons
+   frères : le clic sur la corbeille n'ouvre jamais le document). */
+.file-ligne{display:grid;grid-template-columns:minmax(0,1fr);min-width:0}
+.file-ligne>.file{grid-area:1/1;padding-right:52px}
+.file-ligne>.corbeille{grid-area:1/1;justify-self:end;align-self:center;margin-right:10px}
+.file-ligne>.corbeille-motif{grid-area:2/1;margin:6px 0 0}
+
+/* Arborescence : la corbeille au bout de la ligne du fichier, le motif dessous. */
+.trow.f{flex-wrap:wrap}
+.trow .corbeille{margin-right:8px}
+.trow .corbeille-motif{flex-basis:100%;margin:0 0 6px}
+
+/* ---------- Fenêtre « Supprimer l’employé ? » / « Supprimer la machine ? » ---------- */
+.sup-identite{margin:0;font-weight:500;color:var(--fg);overflow-wrap:anywhere}
+.sup-effets{margin:0;padding-left:18px;display:grid;gap:6px;color:var(--fg2)}
+.sup-lecture,.sup-avert{margin:0;color:var(--fg2)}
+.sup-avert{color:var(--fg)}
+.mform .acts .btn.danger.fort{font-weight:600}
+.sup-retours{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ---------- Bloc Employé / Machine dont la fiche a été supprimée : texte seul, mention ---------- */
+.cf-supp{color:var(--bad-t)!important;font-size:12px;font-weight:500}
+/* Trait plein (§ 9.2 : aucun trait pointillé ou tireté sur le papier, qui inviterait à écrire à la main) ; un filet
+   à gauche distingue la carte d'une fiche supprimée, la mention « fiche supprimée » dit pourquoi. */
+.cf-carte.supprimee{border-left:3px solid var(--bad-b)}
+
+/* ---------- Historiques : nom d'une fiche supprimée, en texte non cliquable ---------- */
+.tl-supprime{color:var(--fg2)}

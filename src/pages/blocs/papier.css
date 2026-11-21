@@ -1,0 +1,46 @@
+/* Tableau du papier : la règle générale `tr:last-child td{border-bottom:0}` (tableaux de données) ôtait
+   la bordure basse de la dernière ligne ; le tableau d'un document reste fermé. */
+.paper tr:last-child td{border-bottom:1px solid var(--border)}
+.paper .p-table tr:last-child td{border-bottom-color:var(--border-x)}
+
+/* Impression d'un document : une feuille propre qui montre ce qui est saisi à l'écran, rien de plus (§ 9.2).
+   Aucune ligne, aucun pointillé ni cadre pour écrire à la main. Les commandes d'écran (ajout / retrait de lignes,
+   Changer, Retirer, ouverture d'un fichier) ne sont pas imprimées. Complète styles/print.css sans le modifier. */
+@media print{
+  .paper .no-print{display:none!important}
+  .paper span.print-only{display:block}
+  /* Icône du calendrier et flèche des listes : des commandes d'écran, pas du contenu. */
+  .paper ::-webkit-calendar-picker-indicator{display:none}
+  .paper select{appearance:none}
+  .paper{font-size:12px;line-height:18px;gap:10px;color:#000}
+  .paper p{color:#222}
+  /* En-tête : nom du document à gauche (discret), date à droite. */
+  .paper .p-top h4{font-size:12px;font-weight:600;color:#444}
+  .paper .p-top p{font-size:11px}
+  /* Champs : « Libellé : valeur » sur une ligne, sans trait ni cadre. */
+  .paper .df.ligne{display:flex;align-items:baseline;gap:8px}
+  .paper .df.ligne>span:first-child{white-space:nowrap}
+  .paper .df.ligne>span:first-child::after{content:" :"}
+  .paper .df .field,.paper .p-date .field{flex:1;height:auto;min-height:0;padding:0;border:0;border-radius:0;background:none;box-shadow:none;color:#000}
+  .paper .p-date .field{flex:none}
+  .paper .p-date-in{display:none}
+  .paper .df .p-zone{flex:1}
+  .paper .p-bloc:has(>.p-intertitre)+.p-bloc:has(>.p-intertitre){margin-top:-10px}
+  /* Titres et intertitres d'un formulaire. */
+  .paper .p-titre{font-size:16px;margin-top:2px}
+  .paper .p-intertitre,.paper .p-table th{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#EEF0F2;border-color:#555}
+  /* Cases et options : bien visibles. */
+  .paper .ck input{width:14px;height:14px}
+  .paper .p-opts{gap:4px 22px}
+  /* Bloc Employé / Machine : informations en « libellé : valeur ». */
+  .paper .cf-carte{border:0;padding:0;background:none}
+  .paper .cf-ic,.paper .cf-saisie{display:none}
+  .paper .cf-label{font-weight:600}
+  .paper .cf-details{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px 16px}
+  /* Tableau et signatures : bordures nettes, hauteur de ligne naturelle. */
+  .paper .p-table th,.paper .p-table td{border:1px solid #555}
+  .paper .p-tab-defile{overflow:visible}
+  .paper .p-sigs{border-color:#555;break-inside:avoid}
+  .paper .p-sig{border-color:#555}
+  .paper .p-bloc{break-inside:avoid}
+}

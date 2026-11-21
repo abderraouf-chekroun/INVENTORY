@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <!-- Icône « Entités et Dossiers » : carré bleu arrondi (#2B59C3) et dossier blanc. -->
+  <rect x="32" y="32" width="960" height="960" rx="208" fill="#2B59C3"/>
+  <!-- dos du dossier, avec son onglet -->
+  <path d="M272 288 H420 Q442 288 456 305 L494 352 H752 Q792 352 792 392 V684 Q792 724 752 724 H272 Q232 724 232 684 V328 Q232 288 272 288 Z" fill="#C9D7F5"/>
+  <!-- face avant -->
+  <path d="M232 450 Q232 410 272 410 H752 Q792 410 792 450 V684 Q792 724 752 724 H272 Q232 724 232 684 Z" fill="#FFFFFF"/>
+</svg>

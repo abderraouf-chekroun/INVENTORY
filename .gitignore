@@ -1,0 +1,74 @@
+# ---------------------------------------------------------------------------------------------
+# Never commit user data: databases, imported files, backups, error logs
+# ---------------------------------------------------------------------------------------------
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite-journal
+*.db
+*.db-wal
+*.db-shm
+sauvegardes/
+fichiers/
+journal-erreurs.log*
+
+# ---------------------------------------------------------------------------------------------
+# Secrets and signing material
+# ---------------------------------------------------------------------------------------------
+.env
+.env.*
+*.pem
+*.key
+*.pfx
+*.p12
+*.snk
+*.keystore
+
+# ---------------------------------------------------------------------------------------------
+# Logs
+# ---------------------------------------------------------------------------------------------
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ---------------------------------------------------------------------------------------------
+# Dependencies, build and test outputs
+# ---------------------------------------------------------------------------------------------
+node_modules
+dist
+dist-ssr
+*.local
+*.tsbuildinfo
+coverage/
+.vite/
+
+# Rust build output (see also src-tauri/.gitignore)
+target/
+
+# End-to-end suite: report and screenshots
+tests/e2e/resultats/
+
+# Compiled installer and its checksum (copy of src-tauri/target/release/bundle/nsis); root folder only
+/installateur/
+
+# ---------------------------------------------------------------------------------------------
+# Editor and OS files
+# ---------------------------------------------------------------------------------------------
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+Thumbs.db
+desktop.ini
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Original prototype kept locally; the tracked copy is design/prototype-entites-dossiers.html
+/prototype-entites-dossiers.html

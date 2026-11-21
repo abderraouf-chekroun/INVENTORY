@@ -1,0 +1,146 @@
+/* Version 1.3 — états de dossier en couleurs, recherche qui défile, dossiers sans fiches, citations, champs obligatoires.
+   Reprend les jetons et le langage visuel du prototype. Aucune couleur libre : la palette des états est fermée (§ 10.1),
+   chaque couleur a sa classe `st-<couleur>`, définie ici pour le thème clair et le thème sombre (texte lisible sur
+   le fond du badge, contraste d'au moins 4,5:1). */
+
+/* ---------- Palette des états : fond, bordure, texte, pastille / graphique ---------- */
+:root{
+  --st-gris-bg:#F0F2F4; --st-gris-b:#C8CDD3; --st-gris-t:#3E4650; --st-gris:#6B7480;
+  --st-bleu-bg:#EAF1FD; --st-bleu-b:#B5CCF4; --st-bleu-t:#1F4BA8; --st-bleu:#2B59C3;
+  --st-turquoise-bg:#E2F4F4; --st-turquoise-b:#9ED8D8; --st-turquoise-t:#0B5A5E; --st-turquoise:#138087;
+  --st-vert-bg:#EAF6EF; --st-vert-b:#A9D9BC; --st-vert-t:#17663D; --st-vert:#1E7F4D;
+  --st-ambre-bg:#FDF4E3; --st-ambre-b:#F3CF85; --st-ambre-t:#7A4B05; --st-ambre:#C7861A;
+  --st-orange-bg:#FDEEE4; --st-orange-b:#F5BE98; --st-orange-t:#963C0B; --st-orange:#D3621C;
+  --st-rouge-bg:#FCEEEE; --st-rouge-b:#F0B8B8; --st-rouge-t:#A12E2E; --st-rouge:#C03B3B;
+  --st-rose-bg:#FCEDF4; --st-rose-b:#F1B6D0; --st-rose-t:#971E59; --st-rose:#C93B80;
+  --st-violet-bg:#F2EEFC; --st-violet-b:#CDBFF2; --st-violet-t:#5A35AE; --st-violet:#7650D0;
+  --etoile:#C81E1E;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --st-gris-bg:#272D35; --st-gris-b:#56606B; --st-gris-t:#D3D8DE; --st-gris:#9FA7B1;
+  --st-bleu-bg:#172C5C; --st-bleu-b:#2F55A8; --st-bleu-t:#B9CFF5; --st-bleu:#6E93E3;
+  --st-turquoise-bg:#0D3A3C; --st-turquoise-b:#1B6E72; --st-turquoise-t:#A3E2E2; --st-turquoise:#3FB8BE;
+  --st-vert-bg:#0F3A24; --st-vert-b:#17663D; --st-vert-t:#A9D9BC; --st-vert:#4FB37B;
+  --st-ambre-bg:#4A2E05; --st-ambre-b:#8A5506; --st-ambre-t:#F3CF85; --st-ambre:#E0A030;
+  --st-orange-bg:#4A2210; --st-orange-b:#8F4318; --st-orange-t:#F8C29C; --st-orange:#E8803F;
+  --st-rouge-bg:#521A1A; --st-rouge-b:#A12E2E; --st-rouge-t:#F0B8B8; --st-rouge:#E07070;
+  --st-rose-bg:#4D1631; --st-rose-b:#8F2A5C; --st-rose-t:#F4B8D3; --st-rose:#E06AA3;
+  --st-violet-bg:#2E2257; --st-violet-b:#5B43A8; --st-violet-t:#D4C8F7; --st-violet:#9C82EA;
+  --etoile:#FF7A7A; } }
+:root[data-theme="dark"]{
+  --st-gris-bg:#272D35; --st-gris-b:#56606B; --st-gris-t:#D3D8DE; --st-gris:#9FA7B1;
+  --st-bleu-bg:#172C5C; --st-bleu-b:#2F55A8; --st-bleu-t:#B9CFF5; --st-bleu:#6E93E3;
+  --st-turquoise-bg:#0D3A3C; --st-turquoise-b:#1B6E72; --st-turquoise-t:#A3E2E2; --st-turquoise:#3FB8BE;
+  --st-vert-bg:#0F3A24; --st-vert-b:#17663D; --st-vert-t:#A9D9BC; --st-vert:#4FB37B;
+  --st-ambre-bg:#4A2E05; --st-ambre-b:#8A5506; --st-ambre-t:#F3CF85; --st-ambre:#E0A030;
+  --st-orange-bg:#4A2210; --st-orange-b:#8F4318; --st-orange-t:#F8C29C; --st-orange:#E8803F;
+  --st-rouge-bg:#521A1A; --st-rouge-b:#A12E2E; --st-rouge-t:#F0B8B8; --st-rouge:#E07070;
+  --st-rose-bg:#4D1631; --st-rose-b:#8F2A5C; --st-rose-t:#F4B8D3; --st-rose:#E06AA3;
+  --st-violet-bg:#2E2257; --st-violet-b:#5B43A8; --st-violet-t:#D4C8F7; --st-violet:#9C82EA;
+  --etoile:#FF7A7A; }
+
+/* Badge d'état : `badge st st-<couleur>` ; la pastille (ou l'icône) prend la couleur pleine. */
+.badge.st.st-gris{background:var(--st-gris-bg);border-color:var(--st-gris-b);color:var(--st-gris-t)} .badge.st.st-gris i,.etat-pastille.st-gris{background:var(--st-gris)}
+.badge.st.st-bleu{background:var(--st-bleu-bg);border-color:var(--st-bleu-b);color:var(--st-bleu-t)} .badge.st.st-bleu i,.etat-pastille.st-bleu{background:var(--st-bleu)}
+.badge.st.st-turquoise{background:var(--st-turquoise-bg);border-color:var(--st-turquoise-b);color:var(--st-turquoise-t)} .badge.st.st-turquoise i,.etat-pastille.st-turquoise{background:var(--st-turquoise)}
+.badge.st.st-vert{background:var(--st-vert-bg);border-color:var(--st-vert-b);color:var(--st-vert-t)} .badge.st.st-vert i,.etat-pastille.st-vert{background:var(--st-vert)}
+.badge.st.st-ambre{background:var(--st-ambre-bg);border-color:var(--st-ambre-b);color:var(--st-ambre-t)} .badge.st.st-ambre i,.etat-pastille.st-ambre{background:var(--st-ambre)}
+.badge.st.st-orange{background:var(--st-orange-bg);border-color:var(--st-orange-b);color:var(--st-orange-t)} .badge.st.st-orange i,.etat-pastille.st-orange{background:var(--st-orange)}
+.badge.st.st-rouge{background:var(--st-rouge-bg);border-color:var(--st-rouge-b);color:var(--st-rouge-t)} .badge.st.st-rouge i,.etat-pastille.st-rouge{background:var(--st-rouge)}
+.badge.st.st-rose{background:var(--st-rose-bg);border-color:var(--st-rose-b);color:var(--st-rose-t)} .badge.st.st-rose i,.etat-pastille.st-rose{background:var(--st-rose)}
+.badge.st.st-violet{background:var(--st-violet-bg);border-color:var(--st-violet-b);color:var(--st-violet-t)} .badge.st.st-violet i,.etat-pastille.st-violet{background:var(--st-violet)}
+/* Le badge ne se laisse pas écraser dans une ligne ; un nom très long est coupé avec « … » (nom complet en infobulle). */
+.badge.st{flex-shrink:0;max-width:min(240px,100%)}
+.badge.st .st-nom{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:inherit}
+.badge.st>.ic,.badge.st>i{flex:none}
+
+/* ---------- En-tête du dossier ouvert : liste des états ---------- */
+.etat-choix{display:inline-flex;align-items:center;gap:8px;font-weight:500;color:var(--fg2)}
+.etat-select{position:relative;display:inline-flex;align-items:center;min-width:0}
+.etat-select .field{padding-left:26px;min-width:170px;max-width:260px;font-weight:500;color:var(--fg)}
+.etat-pastille{position:absolute;left:10px;top:50%;width:10px;height:10px;margin-top:-5px;border-radius:50%;pointer-events:none;
+  box-shadow:0 0 0 1px var(--surface)}
+.form .etat-select{display:flex}
+.form .etat-select .field{max-width:none;width:100%}
+.etat-motif{margin:-16px 0 0}
+
+.cf-corps .mono{white-space:nowrap}
+
+/* ---------- Recherche globale : la liste défile ---------- */
+.dd{display:flex;flex-direction:column;max-height:min(70vh,560px)}
+.dd[hidden]{display:none}
+.dd .info,.dd .foot{flex:none}
+.dd-liste{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;scroll-padding:28px 0 4px}
+.dd .grp h4{position:sticky;top:0;z-index:1;background:var(--raised)}
+.dd .res{flex:none}
+.dd .res-d{flex:0 1 auto}
+.dd .dd-plus{margin:0;padding:4px 12px 8px 38px;font-size:12px;color:var(--fg3)}
+.dd .foot .foot-n{margin-left:auto;color:var(--fg3)}
+
+/* ---------- Profil : documents où la fiche est nommée ---------- */
+.facons{display:flex;flex-wrap:wrap;gap:4px;justify-content:flex-end;max-width:46%}
+.facon{display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:4px;font-size:12px;font-weight:500;white-space:nowrap;
+  border:1px solid var(--border);background:var(--surface);color:var(--fg2)}
+.facon.bloc{border-color:var(--accent-b);background:var(--accent-s);color:var(--accent-t)}
+
+/* ---------- Champs obligatoires (§ 10.6) ---------- */
+/* !important : l'étoile reste rouge même dans les lignes de réglages (`.set .line span` y impose une couleur). */
+.etoile{color:var(--etoile)!important;font-weight:700;margin-left:2px;text-decoration:none}
+.mention-obligatoire{margin:0;font-size:12px;color:var(--fg2);font-weight:400}
+.mention-obligatoire .etoile{margin:0 2px 0 0}
+.inline .inline-lib{flex-basis:100%;font-weight:500;color:var(--fg)}
+.inline .inline-mention,.cl-renommer .inline-mention,.saisie-code .inline-mention{flex-basis:100%}
+.cl-renommer-lib{font-weight:500;color:var(--fg)}
+.set .line .cl-renommer-lib{color:var(--fg)}
+.alert form.saisie-code{flex-wrap:wrap}
+.saisie-code-lib{font-weight:500;font-size:12px;color:var(--fg)}
+.champ-manque{color:var(--bad-t)!important}
+/* Après un envoi refusé : les champs obligatoires encore vides sont entourés (le message nomme le premier). */
+form.verifie :is(input,select,textarea):is(:required,[aria-required="true"]):placeholder-shown,
+form.verifie select:required:invalid,
+form.verifie input[type="date"]:required:invalid{border-color:var(--bad);box-shadow:0 0 0 1px var(--bad)}
+form.verifie .cf-zone:has(input[aria-required="true"]:placeholder-shown){border-color:var(--bad);box-shadow:0 0 0 1px var(--bad)}
+
+/* Studio : case « Champ obligatoire » de chaque bloc de saisie. */
+.blk .blk-oblig{font-size:12px;font-weight:500;color:var(--fg2);gap:8px}
+.blk .blk-oblig input{width:16px;height:16px}
+
+/* Document : bilan des champs obligatoires, et blocs obligatoires encore vides. */
+.paper .p-oblig{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;padding:8px 10px;border:1px solid var(--warn-b);border-radius:6px;
+  background:var(--warn-bg);color:var(--warn-t);font-size:12px;font-weight:500}
+.paper .p-oblig.ok{border-color:var(--ok-b);background:var(--ok-bg);color:var(--ok-t)}
+.paper .p-oblig .sp{flex:1}
+.paper .p-oblig .btn{height:24px;font-size:12px;color:var(--fg)}
+.paper .p-oblig .mention-obligatoire{flex-basis:100%;color:var(--fg2)}
+.paper .p-manque{position:relative;padding:6px 8px 6px 10px;border-left:3px solid var(--warn);border-radius:2px;background:var(--warn-bg)}
+.paper .p-sig.p-manque{border-left:3px solid var(--warn);border-radius:0}
+.paper .p-manque-tag{display:inline-flex;align-items:center;gap:4px;margin-top:4px;font-size:11px;line-height:16px;font-weight:600;color:var(--warn-t)}
+.paper .p-manque .cf-carte,.paper .p-manque .cf-zone,.paper .p-manque .field{background:var(--surface)}
+.p-date>span{display:inline}
+
+/* ---------- Paramètres : états des dossiers ---------- */
+.set-aide{margin:0;font-size:12px;color:var(--fg2);max-width:640px}
+.etats .cl-nom{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.etat-form{display:grid;gap:10px;padding:12px;border:1px solid var(--border);border-radius:8px;background:var(--subtle)}
+.etat-form.en-place{margin:6px 0 10px;background:var(--surface)}
+.etat-form-titre{margin:0;font-weight:600}
+.etat-nom{display:grid;gap:4px;font-weight:500;color:var(--fg)}
+.set .etat-nom span{color:var(--fg)}
+.etat-nom .field{height:32px;max-width:360px}
+.etat-form .acts{display:flex;gap:8px}
+.etat-apercu{display:flex;align-items:center;gap:8px;margin:0;font-size:12px}
+.set .etat-apercu span:first-child{color:var(--fg2)}
+.couleurs{border:0;margin:0;padding:0;min-width:0}
+.couleurs legend{padding:0;margin-bottom:6px;font-weight:500;color:var(--fg)}
+.couleurs-opts{display:flex;flex-wrap:wrap;gap:6px}
+.couleur-opt{position:relative;display:inline-flex;cursor:pointer}
+.couleur-opt input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.couleur-opt .badge{height:28px;padding:0 10px;font-size:13px;cursor:pointer}
+.couleur-opt input:checked+.badge{font-weight:700;box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--fg)}
+.couleur-opt input:focus-visible+.badge{outline:2px solid var(--focus);outline-offset:3px}
+.set .couleur-opt span{color:inherit}
+
+@media print{
+  .paper .etoile{color:#000!important}
+  .paper .p-manque{border:0;padding:0;background:none}
+}

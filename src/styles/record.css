@@ -1,0 +1,24 @@
+/* Page de fiche (récapitulatif, alertes, onglets, frise) — repris à l'identique du prototype (design/prototype-entites-dossiers.html). */
+/* record page */
+.recap{display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding:16px;border:1px solid var(--border);border-radius:8px}
+.recap .tile{width:48px;height:48px;border-radius:8px;background:var(--accent-s);color:var(--accent-t);display:grid;place-items:center;flex:none}
+.recap dl{display:flex;gap:24px;margin:0;flex-wrap:wrap;flex:1} .recap dt{font-size:12px;color:var(--fg3)} .recap dd{margin:0;font-weight:500;display:flex;align-items:center;gap:8px}
+.alert{display:flex;gap:12px;align-items:center;padding:12px;border:1px solid;border-radius:6px;flex-wrap:wrap}
+.alert div{flex:1;min-width:200px} .alert b{display:block;font-weight:500} .alert p{margin:0;font-size:12px;color:var(--fg2)}
+.alert.warn{background:var(--warn-bg);border-color:var(--warn-b)} .alert.warn b,.alert.warn>.ic{color:var(--warn-t)}
+.alert.bad{background:var(--bad-bg);border-color:var(--bad-b)} .alert.bad b,.alert.bad>.ic{color:var(--bad-t)}
+.alert.info{background:var(--subtle);border-color:var(--border)} .alert.info>.ic{color:var(--fg2)}
+.alert form{display:flex;gap:8px;align-items:center}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--border);overflow-x:auto}
+.tabs button{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 12px;color:var(--fg2);font-weight:500;border-bottom:2px solid transparent;white-space:nowrap}
+.tabs button:hover{color:var(--fg);border-bottom-color:var(--border-x)}
+.tabs button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--accent)}
+.tabs button[aria-selected="true"] .count{background:var(--accent-s);color:var(--accent-t)}
+.tl{list-style:none;margin:0;padding:0}
+.tl li{display:grid;grid-template-columns:16px 1fr auto;gap:0 12px;padding-bottom:16px;position:relative}
+.tl li::before{content:"";position:absolute;left:7.5px;top:18px;bottom:0;width:1px;background:var(--border)}
+.tl li:last-child::before{display:none}
+.tl li i{width:8px;height:8px;border-radius:50%;margin:6px 4px 0;background:var(--surface);border:1.5px solid var(--border-x)}
+.tl li.assoc i{background:var(--accent);border-color:var(--accent)} .tl li.clos i{background:var(--ok);border-color:var(--ok)} .tl li.alerte i{background:var(--warn);border-color:var(--warn)}
+.tl b{font-weight:500} .tl p{margin:0;grid-column:2;font-size:12px;color:var(--fg2)} .tl time{font-size:12px;color:var(--fg3)}
+.tl-year{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--fg3);margin:0 0 8px}

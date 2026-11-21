@@ -1,0 +1,49 @@
+[package]
+name = "entites-dossiers"
+version = "1.8.2"
+description = "INVENTORY : suivi local des employés, des machines, des dossiers et des documents"
+authors = ["INVENTORY contributors"]
+license = "GPL-3.0-only"
+edition = "2024"
+
+[lib]
+# The `_lib` suffix may seem redundant but it is necessary
+# to make the lib name unique and wouldn't conflict with the bin name.
+# This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
+name = "entites_dossiers_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["protocol-asset"] }
+tauri-plugin-opener = "2"
+tauri-plugin-dialog = "2"
+tauri-plugin-single-instance = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+rusqlite = { version = "0.43", features = ["bundled"] }
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+uuid = { version = "1", features = ["v4"] }
+# Identifiant d'un employé (§ 10.5) : HMAC-SHA-256 (RustCrypto ; sha2 0.10 et getrandom 0.3 sont déjà
+# tirés par wry et tauri, seuls hmac et subtle s'ajoutent à Cargo.lock) ; clé tirée par le générateur du système.
+hmac = "0.12"
+sha2 = "0.10"
+getrandom = "0.3"
+
+# Filtre des requêtes de la WebView (fenetre.rs) : mêmes versions que celles déjà tirées par wry.
+[target.'cfg(windows)'.dependencies]
+webview2-com = "0.39"
+windows = { version = "0.62", features = ["Win32_System_Com"] }
+windows-core = "0.62"
+
+# Read the optimization guideline for more details: https://tauri.app/concept/size/#cargo-configuration
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = 3
+panic = "abort"
+strip = true
+# Un dépassement arithmétique arrête l'application au lieu de produire une valeur fausse.
+overflow-checks = true

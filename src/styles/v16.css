@@ -1,0 +1,14 @@
+/* Version 1.6 — suppression d'un dossier avec tout son contenu (spécification § 15).
+   Aucune couleur nouvelle : la corbeille reprend celle des documents (v15.css), le bouton « Supprimer le dossier » le
+   style « danger ». */
+
+/* ---------- Carte de dossier (vues Groupes / liste) : la corbeille dans le cadre de la carte, en bas à droite ----------
+   Deux boutons frères superposés dans la même case de grille : le clic sur la corbeille n'ouvre jamais le dossier. */
+.folder-carte{display:grid;grid-template-columns:minmax(0,1fr);min-width:0}
+.folder-carte>.folder{grid-area:1/1;min-width:0}
+/* Le pied de la carte laisse la place de la corbeille (le chevron reste visible, à sa gauche). */
+.folder-carte>.folder .ft{padding-right:36px}
+.folder-carte>.corbeille{grid-area:1/1;justify-self:end;align-self:end;margin:0 8px 8px 0}
+
+/* Arborescence : la corbeille du dossier se place au bout de sa ligne avec la règle `.trow .corbeille` de v15.css, dans
+   la même colonne que celles des documents ; l'infobulle les distingue (« Supprimer le dossier » / « … le document »). */

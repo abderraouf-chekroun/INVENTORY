@@ -1,0 +1,13 @@
+/* En-tête de page et sections — repris à l'identique du prototype (design/prototype-entites-dossiers.html). */
+/* page + sections */
+.ph{display:flex;gap:16px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap}
+.eyebrow{margin:0 0 2px;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--accent-t)}
+h1{margin:0;font-size:22px;line-height:28px;font-weight:600;letter-spacing:-.01em;text-wrap:balance}
+.lead{margin:2px 0 0;color:var(--fg2);max-width:70ch}
+.ph-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;position:relative}
+.sec{display:flex;flex-direction:column;gap:12px;min-width:0}
+.sec-h{display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.sec-h h2{margin:0;font-size:15px;line-height:20px;font-weight:600;display:flex;gap:8px;align-items:baseline}
+.sec-h h2 span{font:500 12px var(--mono);color:var(--fg3)}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.empty{padding:24px;border:1px dashed var(--border-x);border-radius:8px;color:var(--fg2);text-align:center;background:var(--subtle)}
